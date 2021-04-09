@@ -1,6 +1,6 @@
 #!/bin/bash
 
 pkill -9 listmonk
- cd ../
+cd ../
 ./listmonk --install --yes
 ./listmonk > /dev/null 2>/dev/null &

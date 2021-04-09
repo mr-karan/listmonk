@@ -42,7 +42,9 @@ jobs:
         with:
           working-directory: frontend
           # build: yarn
-          start: cypress/support/reset.sh
+          start: |
+            ./listmonk --install --yes
+            ./listmonk
           # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:9000'
           config-file: cypress.json
