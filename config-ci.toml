@@ -6,8 +6,8 @@
     # be replaced with a better multi-user, role-based authentication system.
     # IMPORTANT: Leave both values empty to disable authentication on admin
     # only where an external authentication is already setup.
-    admin_username = "listmonk"
-    admin_password = "listmonk"
+    # admin_username = "listmonk"
+    # admin_password = "listmonk"
 
 # Database.
 [db]
