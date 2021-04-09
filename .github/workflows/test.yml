@@ -42,7 +42,7 @@ jobs:
       - name: Run Listmonk Server
         run: |
            ./listmonk --install --yes --config config-ci.toml
-           ./listmonk --config config-ci.toml
+           ./listmonk --config config-ci.toml &
   
       - name: Cypress Tests
         uses: cypress-io/github-action@v2
