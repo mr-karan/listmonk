@@ -48,6 +48,4 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           working-directory: frontend 
-          # quote the url to be safe against YML parsing surprises
-          wait-on: 'http://localhost:9000'
           config-file: cypress.json
