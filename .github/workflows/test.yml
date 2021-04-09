@@ -42,4 +42,5 @@ jobs:
         with:
           working-directory: frontend
           # build: yarn
+          start: pkill -9 listmonk | cd ../ && ./listmonk --install --yes && ./listmonk > /dev/null 2>/dev/null &
           config-file: cypress.json
