@@ -7,32 +7,32 @@ jobs:
   cypress:
     runs-on: ubuntu-20.04
     # Service containers to run with `runner-job`
-    # services:
-    #   # Label used to access the service container
-    #   postgres:
-    #     # Docker Hub image
-    #     image: postgres
-    #     # Provide the password for postgres
-    #     env:
-    #       POSTGRES_PASSWORD: postgres
-    #     # Set health checks to wait until postgres has started
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
-    #     ports:
-    #       # Maps tcp port 5432 on service container to the host
-    #       - 5432:5432
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
 
     steps:
-      - name: Checkout
+      - name: Checkout Project
         uses: actions/checkout@v2
 
-      - name: Prepare dependencies
+      - name: Prepare Dependencies
         run: make deps
 
-      - name: Build Binary
+      - name: Build Listmonk Binary
         run: |
           export PATH=$PATH:/home/runner/go/bin/
           make dist
@@ -42,5 +42,7 @@ jobs:
         with:
           working-directory: frontend
           # build: yarn
-          start: pkill -9 listmonk | cd ../ && ./listmonk --install --yes && ./listmonk > /dev/null 2>/dev/null &
+          start: cypress/support/reset.sh
+          # quote the url to be safe against YML parsing surprises
+          wait-on: 'http://localhost:9000'
           config-file: cypress.json
