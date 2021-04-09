@@ -14,7 +14,9 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: listmonk
+          POSTGRES_USER: listmonk
+          POSTGRES_DB: listmonk
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -37,14 +39,15 @@ jobs:
           export PATH=$PATH:/home/runner/go/bin/
           make dist
 
+      - name: Run Listmonk Server
+        run: |
+           ./listmonk --install --yes --config config-ci.toml
+           ./listmonk --config config-ci.toml
+  
       - name: Cypress Tests
         uses: cypress-io/github-action@v2
         with:
-          working-directory: frontend
-          # build: yarn
-          start: |
-            ./listmonk --install --yes
-            ./listmonk
+          working-directory: frontend 
           # quote the url to be safe against YML parsing surprises
           wait-on: 'http://localhost:9000'
           config-file: cypress.json
